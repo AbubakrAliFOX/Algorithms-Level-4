@@ -13,11 +13,7 @@ short ReadNumber(string Msg = "Please Enter a number")
 }
 
 bool IsLeapYear (short Number) {
-    if ((Number % 4 == 0 && Number % 100 != 0) || (Number % 400 ==0)) {
-        return true;
-    }
-
-    return false;
+    return (Number % 4 == 0 && Number % 100 != 0) || (Number % 400 ==0);
 }
 
 
