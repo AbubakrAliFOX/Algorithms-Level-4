@@ -4,6 +4,11 @@
 #include <iomanip>
 using namespace std;
 
+struct Date
+{
+    short Day, Month, Year;
+};
+
 short ReadNumber(string Msg = "Please Enter a number")
 {
     short Number;
@@ -52,10 +57,37 @@ string DateOfDay(short Year, short Day)
         }
         Day -= DaysInMonth(Year, Month);
         Month++;
-        
     }
-    
-    return to_string(Day)+"/"+to_string(Month)+"/"+to_string(Year);
+
+    return to_string(Day) + "/" + to_string(Month) + "/" + to_string(Year);
+}
+
+void AddDaysToDate(Date &NewDate, short DaysToAdd)
+{
+    short NumberOfDaysInCurrentMonth;
+    while (DaysToAdd > 0)
+    {
+        NumberOfDaysInCurrentMonth = DaysInMonth(NewDate.Year, NewDate.Month);
+
+        DaysToAdd -= (NumberOfDaysInCurrentMonth - NewDate.Day + 1);
+        NewDate.Day = 1;
+
+        if (NewDate.Month < 12)
+        {
+            NewDate.Month++;
+        }
+        else
+        {
+            NewDate.Year++;
+            NewDate.Month = 1;
+        }
+
+        if (DaysToAdd <= NumberOfDaysInCurrentMonth)
+        {
+            NewDate.Day += DaysToAdd;
+            break;
+        }
+    }
 }
 
 int main()
@@ -65,13 +97,23 @@ int main()
 
     while (RunLoop)
     {
+        Date NewDate;
         short Year = ReadNumber("Enter Year: ");
         short Month = ReadNumber("Enter Month: ");
         short Day = ReadNumber("Enter Day: ");
-        short DayNumber = DaysFromYearBeginning(Year, Month, Day);
-        
-        cout << "Number of days from beginning of the year: " << DayNumber << endl;
-        cout << DayNumber << " Date is: " << DateOfDay(Year, DayNumber) << endl;
+        short DaysToAdd = ReadNumber("Enter Days To Add: ");
+
+        NewDate.Day = Day;
+        NewDate.Month = Month;
+        NewDate.Year = Year;
+
+        string DateString = to_string(NewDate.Day) + "/" + to_string(NewDate.Month) + "/" + to_string(NewDate.Year);
+        cout << "Old Date: " << DateString << endl;
+
+        AddDaysToDate(NewDate, DaysToAdd);
+        DateString = to_string(NewDate.Day) + "/" + to_string(NewDate.Month) + "/" + to_string(NewDate.Year);
+        cout << "After adding [" << DaysToAdd << "] days: " << DateString << endl;
+        cout << "*** For Extremely Large Number, change types to int ***" << endl;
     }
 
     return 0;
