@@ -28,9 +28,9 @@ void ReadAndCreateDate(Date &NewDate)
     NewDate.Year = Year;
 }
 
-bool IsDate1LessThanDate2(Date Date1, Date Date2)
+bool IsDate1EqualtoDate2(Date Date1, Date Date2)
 {
-    return (Date1.Year < Date2.Year) ? true : ((Date1.Year == Date2.Year) ? (Date1.Month < Date2.Month ? true : (Date1.Month == Date2.Month ? Date1.Day < Date2.Day : false)) : false);
+    return Date1.Year == Date2.Year ? (Date1.Month == Date2.Month ? Date1.Day == Date2.Day : false) : (false);
 }
 
 int main()
@@ -44,7 +44,7 @@ int main()
         ReadAndCreateDate(NewDate1);
         ReadAndCreateDate(NewDate2);
 
-        if (IsDate1LessThanDate2(NewDate1, NewDate2))
+        if (IsDate1EqualtoDate2(NewDate1, NewDate2))
         {
             cout << "TRUE" << endl;
         }
