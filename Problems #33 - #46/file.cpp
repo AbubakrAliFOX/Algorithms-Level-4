@@ -45,14 +45,15 @@ short DaysInMonth(short Year, short Month)
     // return Month == 2 ? (IsLeapYear(Year) ? 29 : 28) : (Month == 4 || Month == 6 || Month == 9 || Month == 11) ? 30 : 31;
 }
 
-bool IsDayLast(Date NewDate)
+bool IsDayFirst(Date NewDate)
 {
-    return NewDate.Day == DaysInMonth(NewDate.Year, NewDate.Month);
+    return NewDate.Day == 1;
 }
 
-bool IsMonthLast(Date NewDate)
+
+bool IsMonthFirst(Date NewDate)
 {
-    return NewDate.Month == 12;
+    return NewDate.Month == 1;
 }
 
 void PrintDateOperation(Date CurrentDate, string Operation)
@@ -70,9 +71,9 @@ void CheckNextYearCompatability(Date &NewDate) {
 
 void DecreaseOneDay(Date &NewDate)
 {
-    if (NewDate.Day == 1)
+    if (IsDayFirst(NewDate))
     {
-        if (NewDate.Month == 1)
+        if (IsMonthFirst(NewDate))
         {
             NewDate.Month = 12;
             NewDate.Year--;
@@ -87,7 +88,7 @@ void DecreaseOneDay(Date &NewDate)
     
 }
 
-void IncreaseDateByxDays(Date &NewDate, int X)
+void DecreaseDateByxDays(Date &NewDate, int X)
 {
     for (int i = 0; i < X; i++)
     {
@@ -95,7 +96,7 @@ void IncreaseDateByxDays(Date &NewDate, int X)
     }
 }
 
-void IncreaseDateByOneWeek(Date &NewDate)
+void DecreaseDateByOneWeek(Date &NewDate)
 {
     for (int i = 0; i < 7; i++)
     {
@@ -103,100 +104,100 @@ void IncreaseDateByOneWeek(Date &NewDate)
     }
 }
 
-void IncreaseDateByxWeeks(Date &NewDate, int X)
+void DecreaseDateByxWeeks(Date &NewDate, int X)
 {
     for (int i = 0; i < X; i++)
     {
-        IncreaseDateByOneWeek(NewDate);
+        DecreaseDateByOneWeek(NewDate);
     }
 }
 
-void IncreaseDateByOneMonth(Date &NewDate)
+void DecreaseDateByOneMonth(Date &NewDate)
 {
     
-    if (IsMonthLast(NewDate))
+    if (IsMonthFirst(NewDate))
     {
-        NewDate.Month = 1;
-        NewDate.Year++;
+        NewDate.Month = 12;
+        NewDate.Year--;
     }
     else
     {
-        NewDate.Month++;
+        NewDate.Month--;
     }
 
     CheckNextYearCompatability(NewDate);
     
 }
 
-void IncreaseDateByXMonths(Date &NewDate, int X)
+void DecreaseDateByXMonths(Date &NewDate, int X)
 {
     for (int i = 0; i < X; i++)
     {
-        IncreaseDateByOneMonth(NewDate);
+        DecreaseDateByOneMonth(NewDate);
     }
 }
 
-void IncreaseDateByOneYear(Date &NewDate)
+void DecreaseDateByOneYear(Date &NewDate)
 {
-    NewDate.Year++;
+    NewDate.Year--;
     
     CheckNextYearCompatability(NewDate);
     
 }
 
-void IncreaseDateByXYears(Date &NewDate, int X)
+void DecreaseDateByXYears(Date &NewDate, int X)
 {
     for (int i = 0; i < X; i++)
     {
-        IncreaseDateByOneYear(NewDate);
+        DecreaseDateByOneYear(NewDate);
     }
 }
 
-void IncreaseDateByXYearsFaster(Date &NewDate, int X)
+void DecreaseDateByXYearsFaster(Date &NewDate, int X)
 {
-    NewDate.Year += X;
+    NewDate.Year -= X;
 
     CheckNextYearCompatability(NewDate);
 }
 
-void IncreaseDateByOneDecade(Date &NewDate)
+void DecreaseDateByOneDecade(Date &NewDate)
 {
-    IncreaseDateByXYearsFaster(NewDate, 10);
+    DecreaseDateByXYearsFaster(NewDate, 10);
 }
 
-void IncreaseDateByXDecades(Date &NewDate, int X)
+void DecreaseDateByXDecades(Date &NewDate, int X)
 {
     for (int i = 0; i < X; i++)
     {
-        IncreaseDateByOneDecade(NewDate);
+        DecreaseDateByOneDecade(NewDate);
     }
 }
 
-void IncreaseDateByXDecadesFaster(Date &NewDate, int X)
+void DecreaseDateByXDecadesFaster(Date &NewDate, int X)
 {
-    NewDate.Year += (X * 10);
+    NewDate.Year -= (X * 10);
 
     CheckNextYearCompatability(NewDate);
 } 
 
-void IncreaseDateByOneCentury(Date &NewDate)
+void DecreaseDateByOneCentury(Date &NewDate)
 {
-    NewDate.Year += 100;
+    NewDate.Year -= 100;
 } 
 
-void IncreaseDateByXCenturies(Date &NewDate, int X)
+void DecreaseDateByXCenturies(Date &NewDate, int X)
 {
-    NewDate.Year += (X * 100);
+    NewDate.Year -= (X * 100);
 } 
 
-void IncreaseDateByOneMellinium(Date &NewDate)
+void DecreaseDateByOneMellinium(Date &NewDate)
 {
-    NewDate.Year += 1000;
+    NewDate.Year -= 1000;
 } 
 
-void IncreaseDateByXMellinia(Date &NewDate, int X)
+void DecreaseDateByXMellinia(Date &NewDate, int X)
 {
-    NewDate.Year += (X * 1000);
+    NewDate.Year -= (X * 1000);
 } 
 
 int main()
@@ -213,51 +214,51 @@ int main()
         DecreaseOneDay(NewDate1);
         PrintDateOperation(NewDate1, "01 - Subtracting one day: ");
 
-        // IncreaseDateByxDays(NewDate1, 10);
-        // PrintDateOperation(NewDate1, "02 - Subtracting 10 days: ");
+        DecreaseDateByxDays(NewDate1, 10);
+        PrintDateOperation(NewDate1, "02 - Subtracting 10 days: ");
 
-        // IncreaseDateByOneWeek(NewDate1);
-        // PrintDateOperation(NewDate1, "03 - Subtracting one week: ");
+        DecreaseDateByOneWeek(NewDate1);
+        PrintDateOperation(NewDate1, "03 - Subtracting one week: ");
 
-        // IncreaseDateByxWeeks(NewDate1, 10);
-        // PrintDateOperation(NewDate1, "04 - Subtracting 10 weeks: ");
+        DecreaseDateByxWeeks(NewDate1, 10);
+        PrintDateOperation(NewDate1, "04 - Subtracting 10 weeks: ");
 
-        // IncreaseDateByOneMonth(NewDate1);
-        // PrintDateOperation(NewDate1, "05 - Subtracting 1 month: ");
+        DecreaseDateByOneMonth(NewDate1);
+        PrintDateOperation(NewDate1, "05 - Subtracting 1 month: ");
 
-        // IncreaseDateByXMonths(NewDate1, 5);
-        // PrintDateOperation(NewDate1, "06 - Subtracting 5 months: ");
+        DecreaseDateByXMonths(NewDate1, 5);
+        PrintDateOperation(NewDate1, "06 - Subtracting 5 months: ");
 
-        // IncreaseDateByOneYear(NewDate1);
-        // PrintDateOperation(NewDate1, "07 - Subtracting 1 year: ");
+        DecreaseDateByOneYear(NewDate1);
+        PrintDateOperation(NewDate1, "07 - Subtracting 1 year: ");
 
-        // IncreaseDateByXYears(NewDate1, 10);
-        // PrintDateOperation(NewDate1, "08 - Subtracting 10 years: ");
+        DecreaseDateByXYears(NewDate1, 10);
+        PrintDateOperation(NewDate1, "08 - Subtracting 10 years: ");
 
-        // IncreaseDateByXYearsFaster(NewDate1, 10);
-        // PrintDateOperation(NewDate1, "09 - Subtracting 10 years (faster): ");
+        DecreaseDateByXYearsFaster(NewDate1, 10);
+        PrintDateOperation(NewDate1, "09 - Subtracting 10 years (faster): ");
 
 
-        // IncreaseDateByOneDecade(NewDate1);
-        // PrintDateOperation(NewDate1, "10 - Subtracting 1 decade: ");
+        DecreaseDateByOneDecade(NewDate1);
+        PrintDateOperation(NewDate1, "10 - Subtracting 1 decade: ");
 
-        // IncreaseDateByXDecades(NewDate1, 10);
-        // PrintDateOperation(NewDate1, "11 - Subtracting 10 decades: ");
+        DecreaseDateByXDecades(NewDate1, 10);
+        PrintDateOperation(NewDate1, "11 - Subtracting 10 decades: ");
 
-        // IncreaseDateByXDecadesFaster(NewDate1, 10);
-        // PrintDateOperation(NewDate1, "12 - Subtracting 10 decades (faster): ");
+        DecreaseDateByXDecadesFaster(NewDate1, 10);
+        PrintDateOperation(NewDate1, "12 - Subtracting 10 decades (faster): ");
 
-        // IncreaseDateByOneCentury(NewDate1);
-        // PrintDateOperation(NewDate1, "13 - Subtracting 1 century: ");
+        DecreaseDateByOneCentury(NewDate1);
+        PrintDateOperation(NewDate1, "13 - Subtracting 1 century: ");
 
-        // IncreaseDateByXCenturies(NewDate1, 10);
-        // PrintDateOperation(NewDate1, "14 - Subtracting 10 centuries: ");
+        DecreaseDateByXCenturies(NewDate1, 10);
+        PrintDateOperation(NewDate1, "14 - Subtracting 10 centuries: ");
 
-        // IncreaseDateByOneMellinium(NewDate1);
-        // PrintDateOperation(NewDate1, "15 - Subtracting 1 mellinuim: ");
+        DecreaseDateByOneMellinium(NewDate1);
+        PrintDateOperation(NewDate1, "15 - Subtracting 1 mellinuim: ");
 
-        // IncreaseDateByXMellinia(NewDate1, 10);
-        // PrintDateOperation(NewDate1, "16 - Subtracting 10 mellinia: ");
+        DecreaseDateByXMellinia(NewDate1, 10);
+        PrintDateOperation(NewDate1, "16 - Subtracting 10 mellinia: ");
     }
 
     return 0;
