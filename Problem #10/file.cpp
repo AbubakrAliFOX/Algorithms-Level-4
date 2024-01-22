@@ -26,7 +26,7 @@ short DaysInMonth(short Year, short Month)
     // return Month == 2 ? (IsLeapYear(Year) ? 29 : 28) : (Month == 4 || Month == 6 || Month == 9 || Month == 11) ? 30 : 31;
 }
 
-short OrderOfDate(short Year, short Month, short Day)
+short OfDate(short Year, short Month, short Day)
 {
     short a, y, m;
     a = (14 - Month) / 12;
