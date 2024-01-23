@@ -54,7 +54,19 @@ bool IsDate1EqualtoDate2(Date Date1, Date Date2)
 
 bool IsDate1AfterDate2(Date Date1, Date Date2)
 {
-    return !IsDate1BeforeDate2(Date1,Date2) && !IsDate1EqualtoDate2(Date1,Date2);
+    return !IsDate1BeforeDate2(Date1, Date2) && !IsDate1EqualtoDate2(Date1, Date2);
+}
+
+enum BeforeAfterEqualDate
+{
+    After = 1,
+    Before = -1,
+    Equal = 0
+};
+
+BeforeAfterEqualDate CompareTwoDates(Date Date1, Date Date2)
+{
+    return IsDate1BeforeDate2(Date1, Date2) ? (BeforeAfterEqualDate::Before) : (IsDate1EqualtoDate2(Date1, Date2) ? BeforeAfterEqualDate::Equal : BeforeAfterEqualDate::After);
 }
 
 int main()
@@ -67,14 +79,7 @@ int main()
         Date NewDate1 = ReadAndCreateDate();
         Date NewDate2 = ReadAndCreateDate();
 
-        if (IsDate1AfterDate2(NewDate1, NewDate2))
-        {
-            cout << "TRUE" << endl;
-        }
-        else
-        {
-            cout << "False" << endl;
-        }
+        cout << "Compare result = " << CompareTwoDates(NewDate1, NewDate2) << endl;
     }
 
     return 0;
