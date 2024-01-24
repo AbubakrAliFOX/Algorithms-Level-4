@@ -18,6 +18,15 @@ short ReadNumber(string Msg = "Please Enter a number")
     return Number;
 }
 
+string ReadString(string Msg = "Please Enter a string")
+{
+    string Str;
+    cout << Msg << endl;
+    getline(cin >> ws, Str);
+
+    return Str;
+}
+
 Date GetSysDate()
 {
     Date SysDate;
@@ -76,6 +85,19 @@ bool IsDateValid(Date NewDate)
     return (NewDate.Month <= 12 && NewDate.Month >= 1) && ((NewDate.Day <= DaysInMonth(NewDate) && NewDate.Day >= 1));
 }
 
+string ReplaceWordInString(string Str, string Item, string Replace)
+{
+    short pos = Str.find(Item);
+    string Before, After;
+    while (pos != std::string::npos)
+    {
+        Before = Str.substr(0, pos);
+        After = Str.substr(pos + Item.length(), Str.length() - 1);
+        Str = Before + Replace + After;
+        pos = Str.find(Item);
+    }
+    return Str;
+}
 vector<string> split(string Str, string Delim)
 {
 
@@ -114,7 +136,6 @@ Date StringToDate(string strDate)
     return NewData;
 }
 
-
 string DateToString(Date NewDate)
 {
     return to_string(NewDate.Day) + "/" + to_string(NewDate.Month) + "/" + to_string(NewDate.Year);
@@ -127,6 +148,15 @@ void PrintDate(Date NewDate)
     cout << "Year :" << NewDate.Year << endl;
 }
 
+string FormateDate(Date NewDate, string DateFormat = "dd/mm/yyyy")
+{
+    string FormattedDateString = "";
+    FormattedDateString = ReplaceWordInString(DateFormat, "dd", to_string(NewDate.Day));
+    FormattedDateString = ReplaceWordInString(FormattedDateString, "mm", to_string(NewDate.Month));
+    FormattedDateString = ReplaceWordInString(FormattedDateString, "yyyy", to_string(NewDate.Year));
+    return FormattedDateString;
+}
+
 int main()
 {
 
@@ -134,10 +164,21 @@ int main()
 
     while (RunLoop)
     {
-        Date Date1 = ReadAndCreateDate();
-        // string strDate = "21/12/2022";
-        cout << DateToString(Date1) << endl;
-        // PrintDate(StringToDate(strDate));
+        string strDate = ReadString("Please enter date (dd/mm/yyyy):");
+        Date NewDate = StringToDate(strDate);
+        
+        cout << "\n"
+             << FormateDate(NewDate) << "\n";
+        cout << "\n"
+             << FormateDate(NewDate, "yyyy/dd/mm") << "\n";
+        cout << "\n"
+             << FormateDate(NewDate, "mm/dd/yyyy") << "\n";
+        cout << "\n"
+             << FormateDate(NewDate, "mm-dd-yyyy") << "\n";
+        cout << "\n"
+             << FormateDate(NewDate, "dd-mm-yyyy") << "\n";
+        cout << "\n"
+             << FormateDate(NewDate, "Day:dd, Month:mm, Year:yyyy") << "\n";
     }
 
     return 0;
